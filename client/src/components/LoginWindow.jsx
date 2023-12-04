@@ -3,9 +3,17 @@ import logo from './../pngegg.png'
 import Btn from './Btn'
 import BtnForgot from './BtnForgot'
 import { NavLink } from 'react-router-dom'
+import { GoogleLogin } from '@react-oauth/google'
+import { useGoogleLogin } from '@react-oauth/google';
 
 const LoginWindow = () => {
+
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => console.log(tokenResponse),
+  });
+
   return (
+    <div className='container'>
     <div className='login_window'>
       <div className='login_header'>
         <img src={logo} alt='logo' className='img_logo' />
@@ -26,10 +34,30 @@ const LoginWindow = () => {
           <NavLink to='/pageforgot' className='nav'>
           <BtnForgot />
           </NavLink>
-          <Btn />
+            <Btn />
+          
         </div>
       </form>
+     
     </div>
+     <div className='btn_goggle'>
+      <GoogleLogin 
+          environment="TEST"
+          buttonColor="black"
+          buttonLocale="en"
+          buttonSizeMode="fill"
+          style={{ width: 302, height: 40 }}
+          onSuccess={credentialResponse => {
+          console.log(credentialResponse);
+        }}
+          onError={() => {
+          console.log('Login Failed');
+        }}
+          
+      />
+        {/* <button onClick={() => login()}>Sign in with Google 🚀</button> */}
+      </div>
+      </div>
 
   )
 }

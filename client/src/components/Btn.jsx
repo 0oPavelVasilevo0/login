@@ -1,9 +1,15 @@
+import { useGoogleLogin } from '@react-oauth/google';
 import React from 'react'
 
 const Btn = () => {
+
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => console.log(tokenResponse),
+  });
+
   return (
   
-    <button className='btn'>
+    <button className='btn' onClick={() => login()} >
           Login with google
     </button>
      
