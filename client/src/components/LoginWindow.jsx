@@ -4,13 +4,13 @@ import Btn from './Btn'
 import BtnForgot from './BtnForgot'
 import { NavLink } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google'
-import { useGoogleLogin } from '@react-oauth/google';
+// import { useGoogleLogin } from '@react-oauth/google';
 
 const LoginWindow = () => {
 
-  const login = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
-  });
+  // const login = useGoogleLogin({
+  //   onSuccess: tokenResponse => console.log(tokenResponse),
+  // });
 
   return (
     <div className='container'>
@@ -34,19 +34,18 @@ const LoginWindow = () => {
           <NavLink to='/pageforgot' className='nav'>
           <BtnForgot />
           </NavLink>
-            <Btn />
-          
+            <Btn />        
         </div>
-      </form>
-     
+      </form>    
     </div>
      <div className='btn_goggle'>
       <GoogleLogin 
           environment="TEST"
-          buttonColor="black"
-          buttonLocale="en"
-          buttonSizeMode="fill"
-          style={{ width: 302, height: 40 }}
+          theme='outline'
+          text='signin_with'
+          size='medium'
+          width='302'
+          locale= 'en_EN'
           onSuccess={credentialResponse => {
           console.log(credentialResponse);
         }}

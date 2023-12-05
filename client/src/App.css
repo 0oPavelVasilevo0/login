@@ -22,7 +22,6 @@
 h1 {
   font-size: 24px;
   margin: 0;
-  vertical-align: middle;
   margin-left: 10px;
 }
 
@@ -81,7 +80,7 @@ input:focus {
 .login_header {
   display: flex;
   height: 43px;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   letter-spacing: 4px;
 }
