@@ -11,8 +11,6 @@ if (!clientId) {
   throw new Error('Google client ID is not provided in environment variables.');
 }
 
-// {/* <GoogleOAuthProvider clientId="307229413691-phehas940d3b718383i9fo92ps613ekp.apps.googleusercontent.com"> */}
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

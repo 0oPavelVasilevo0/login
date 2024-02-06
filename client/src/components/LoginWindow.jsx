@@ -11,14 +11,46 @@ import { GoogleLogin } from '@react-oauth/google'
 const LoginWindow = () => {
   const navigate = useNavigate();
 
+//name 
+  // const handleLoginSuccess = (credentialResponse) => {
+  //   const { credential } = credentialResponse;
+  //   const { name } = credential ? JSON.parse(atob(credential.split('.')[1])) : {};
+
+  //   console.log(name);
+
+  //   navigate('/userinfo', { state: { name } }); // Redirect to UserInfo page
+  // };
+
+//email
   const handleLoginSuccess = (credentialResponse) => {
     const { credential } = credentialResponse;
-    const { name } = credential ? JSON.parse(atob(credential.split('.')[1])) : {};
+    let email = '';
 
-    console.log(name);
-    // navigate('/userinfo'); // Redirect to UserInfo page
-    navigate('/userinfo', { state: { name } }); // Pass the name as state
+    if (credential) {
+      const payload = JSON.parse(atob(credential.split('.')[1]));
+      email = payload.email || '';
+    }
+
+    console.log(email);
+
+    navigate('/userinfo', { state: { email } }); // Redirect to UserInfo page
   };
+
+//     const { credential } = credentialResponse;
+//     if (!credential) {
+//       console.error("Credential not found in response");
+//       return;
+//     }
+
+//   try {
+//     const { name } = credential ? JSON.parse(atob(credential.split('.')[1])) : {};
+//     console.log(name);
+//     navigate('/userinfo', { state: { name } });
+//   } catch (error) {
+//     console.error("Error decoding credential:", error);
+//   }
+// }
+
 
   const handleLoginError = () => {
     console.log('Login Failed');
