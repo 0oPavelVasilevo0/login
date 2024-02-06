@@ -5,16 +5,21 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
+if (!clientId) {
+  throw new Error('Google client ID is not provided in environment variables.');
+}
+
+// {/* <GoogleOAuthProvider clientId="307229413691-phehas940d3b718383i9fo92ps613ekp.apps.googleusercontent.com"> */}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId="307229413691-phehas940d3b718383i9fo92ps613ekp.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={clientId}>
     <App />
   </GoogleOAuthProvider>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
