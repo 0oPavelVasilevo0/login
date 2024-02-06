@@ -22,19 +22,38 @@ const LoginWindow = () => {
   // };
 
 //email
+  // const handleLoginSuccess = (credentialResponse) => {
+  //   const { credential } = credentialResponse;
+  //   let email = '';
+
+  //   if (credential) {
+  //     const payload = JSON.parse(atob(credential.split('.')[1]));
+  //     email = payload.email || '';
+  //   }
+
+  //   console.log(email);
+
+  //   navigate('/userinfo', { state: { email } }); // Redirect to UserInfo page
+  // };
+
+
   const handleLoginSuccess = (credentialResponse) => {
     const { credential } = credentialResponse;
-    let email = '';
 
-    if (credential) {
-      const payload = JSON.parse(atob(credential.split('.')[1]));
-      email = payload.email || '';
+    try {
+      if (credential) {
+        const decodedToken = JSON.parse(atob(credential.split('.')[1]));
+        const { name } = decodedToken;
+
+        console.log(name);
+        navigate('/userinfo', { state: { name } }); // Pass the name as state
+      }
+    } catch (error) {
+      console.error('Failed to decode credential:', error);
     }
-
-    console.log(email);
-
-    navigate('/userinfo', { state: { email } }); // Redirect to UserInfo page
   };
+
+
 
 //     const { credential } = credentialResponse;
 //     if (!credential) {
