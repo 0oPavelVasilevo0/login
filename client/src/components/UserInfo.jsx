@@ -12,9 +12,10 @@ const UserInfo = () => {
     };
 
   return (
-      <div>
-          <div>
-              <p>You are logged in as {name}</p>
+      <div >
+          <div >
+              <p className='text'>You are logged in as</p>
+              <p className='text_name'>{name}</p>
           </div>
           <div className='btn_goggle'>
               <button className='btn_out' onClick={handleLogout}>Logout</button>

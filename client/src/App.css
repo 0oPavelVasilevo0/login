@@ -193,3 +193,9 @@ input:focus {
   background-color: #FFFFFF;
 
 }
+
+.text_name {
+  font-weight: bold;
+  letter-spacing: 10px;
+  color: #01afdb;;
+}
