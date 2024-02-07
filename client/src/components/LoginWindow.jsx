@@ -112,7 +112,7 @@ const LoginWindow = () => {
           text='signin_with'
           size='medium'
           width='302'
-          locale='en_EN'
+          // locale='en_EN'
           onSuccess={handleLoginSuccess}
           onError={handleLoginError}
         />
