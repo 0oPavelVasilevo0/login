@@ -13,6 +13,7 @@ const UserInfo = () => {
 
     useEffect(() => {
         const credential = location.state ? location.state.credential : null;
+        console.log('Credential:', credential);
         if (credential) {
             const user = JSON.parse(atob(credential.split('.')[1]));
             setName(user.name);
