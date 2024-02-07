@@ -64,7 +64,7 @@ const UserInfo = () => {
             } catch (error) {
                 if (error instanceof DOMException && error.name === 'InvalidCharacterError') {
                     // Attempt to decode using UTF-8 decoding
-                    const decodedName = decodeURIComponent(escape(window.atob(JSON.parse(atob(credential.split('.')[1])).name)));
+                    const decodedName = decodeURIComponent(encodeURIComponent(window.atob(JSON.parse(atob(credential.split('.')[1])).name)));
                     setName(decodedName);
                     console.log('Logged in as (UTF-8 decoded):', decodedName); // Log the username to console
                 } else {
