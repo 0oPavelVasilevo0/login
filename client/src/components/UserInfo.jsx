@@ -32,7 +32,8 @@ const UserInfo = () => {
             try {
                 const tokenParts = credential.split('.');
                 if (tokenParts.length === 3) {
-                    const user = JSON.parse(atob(tokenParts[1]));
+                    const user = JSON.parse(window.atob(tokenParts[1]));
+                    //  const user = window.atob(JSON.parse(atob(credential.split('.')[1])).name)
                     setName(user.name);
                     console.log('Logged in as:', user.name); // Log the username to console
                 } else {
