@@ -6,7 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const UserInfo = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [name, setName] = useState('');
+    // const [name, setName] = useState('');
+    const [userInfo, setUserInfo] = useState(null);
 
     // const name = location.state ? location.state.name : '';                       //Name       old version
     // const email = location.state ? location.state.email : ''                      //Name
@@ -33,8 +34,12 @@ const UserInfo = () => {
                 const tokenParts = credential.split('.');
                 if (tokenParts.length === 3) {
                     const user = JSON.parse(window.atob(tokenParts[1]));
+                    // const user = JSON.parse(base64.decode(tokenParts[1]));
                     //  const user = window.atob(JSON.parse(atob(credential.split('.')[1])).name)
-                    setName(user.name);
+
+                    // setName(user.name);//1
+                    setUserInfo(user);
+
                     console.log('Logged in as:', user.name); // Log the username to console
                 } else {
                     console.error('Invalid token format:', credential);
@@ -85,14 +90,24 @@ const UserInfo = () => {
 
   return (
       <div >
+
+          {userInfo && (
+              <div>
+                
+
           <div >
               <p className='text'>You are logged in as</p>
-              <p className='text_name'>{name}</p>
+                      {userInfo.picture && (
+                          <img src={userInfo.picture} alt="user_picture" /> // Assuming user photo URL is provided in the JWT token
+                      )}
+              <p className='text_name'>{userInfo.name}</p>
               {/* <p className='text_name'>{email}</p> */}
           </div>
           <div className='btn_goggle'>
               <button className='btn_out' onClick={handleLogout}>Logout</button>
             </div>
+            </div>
+            )}
       </div>
 
     //   <IntlProvider locale="en" messages={{}}>
