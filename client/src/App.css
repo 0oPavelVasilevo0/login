@@ -195,6 +195,7 @@ input:focus {
 }
 
 .text_name {
+  font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
   letter-spacing: 10px;
   color: #01afdb;;
