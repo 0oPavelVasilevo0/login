@@ -195,8 +195,10 @@ input:focus {
 }
 
 .text_name {
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  letter-spacing: 10px;
+  font-family:Arial, Helvetica, sans-serif;
+  /* font-family: 'Times New Roman', Times, serif; */
+  font-size: 18px;
+  /* font-weight: bold; */
+  /* letter-spacing: 10px; */
   color: #01afdb;;
 }
