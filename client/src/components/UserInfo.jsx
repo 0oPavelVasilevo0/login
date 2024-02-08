@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 // import { FormattedMessage, IntlProvider } from 'react-intl'; // Import FormattedMessage and IntlProvider
 
 
@@ -26,24 +27,42 @@ const UserInfo = () => {
     // }, [location.state, navigate]);
 
                                        // :::::::::::::::::::::::::::::::::::::::::::рабочая версия
+    // useEffect(() => {
+    //     const credential = location.state ? location.state.credential : null;
+    //     console.log('Credential:', credential); // Log the credential string
+    //     if (credential) {
+    //         try {
+    //             const tokenParts = credential.split('.');
+    //             if (tokenParts.length === 3) {
+    //                 const user = JSON.parse(window.atob(tokenParts[1]));
+    //                 // const user = JSON.parse(base64.decode(tokenParts[1]));
+    //                 //  const user = window.atob(JSON.parse(atob(credential.split('.')[1])).name)
+
+    //                 // setName(user.name);//1
+    //                 setUserInfo(user);
+
+    //                 console.log('Logged in as:', user.name); // Log the username to console
+    //             } else {
+    //                 console.error('Invalid token format:', credential);
+    //             }
+    //         } catch (error) {
+    //             console.error('Failed to decode credential:', error);
+    //         }
+    //     } else {
+    //         // Handle no user data
+    //         navigate('/'); // Redirect to login if no user data is found
+    //     }
+    // }, [location.state, navigate]);
+
+             //           ::::::::::::::::::::       jwt-decode
     useEffect(() => {
         const credential = location.state ? location.state.credential : null;
         console.log('Credential:', credential); // Log the credential string
         if (credential) {
             try {
-                const tokenParts = credential.split('.');
-                if (tokenParts.length === 3) {
-                    const user = JSON.parse(window.atob(tokenParts[1]));
-                    // const user = JSON.parse(base64.decode(tokenParts[1]));
-                    //  const user = window.atob(JSON.parse(atob(credential.split('.')[1])).name)
-
-                    // setName(user.name);//1
-                    setUserInfo(user);
-
-                    console.log('Logged in as:', user.name); // Log the username to console
-                } else {
-                    console.error('Invalid token format:', credential);
-                }
+                const decodedToken = jwtDecode(credential);
+                setUserInfo(decodedToken);
+                console.log('Logged in as:', decodedToken.name); // Log the username to console
             } catch (error) {
                 console.error('Failed to decode credential:', error);
             }
