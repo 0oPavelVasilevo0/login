@@ -123,7 +123,16 @@ input:focus {
   justify-content: center;
   align-items: center;
   margin-left: auto;
+}
 
+.btn:hover {
+  background: #01afdb;
+}
+
+.disabled, .disabled:hover {
+  opacity: 0.5;
+  background: #445862;
+  cursor: not-allowed;
 }
 
 .btn_out {
@@ -170,9 +179,7 @@ input:focus {
   margin-right: auto;
 }
 
-.btn:hover {
-  background: #01afdb;
-}
+
 
 .btn_forgot:hover {
   color: #01afdb;
