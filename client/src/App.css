@@ -130,8 +130,9 @@ input:focus {
 }
 
 .disabled, .disabled:hover {
-  opacity: 0.5;
-  background: #445862;
+  opacity: 0.3;
+  /* background: #445862; */
+  background: #01afdb;
   cursor: not-allowed;
 }
 
