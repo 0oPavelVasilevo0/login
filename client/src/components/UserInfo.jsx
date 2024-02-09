@@ -7,6 +7,8 @@ import { jwtDecode } from 'jwt-decode';
 const UserInfo = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    // const { profile } = location.state || {}; // Получаем данные профиля из объекта состояния маршрута
+
     // const [name, setName] = useState('');
     const [userInfo, setUserInfo] = useState(null);
 
@@ -26,7 +28,7 @@ const UserInfo = () => {
     //     }
     // }, [location.state, navigate]);
 
-                                       // :::::::::::::::::::::::::::::::::::::::::::рабочая версия
+    // :::::::::::::::::::::::::::::::::::::::::::рабочая версия
     // useEffect(() => {
     //     const credential = location.state ? location.state.credential : null;
     //     console.log('Credential:', credential); // Log the credential string
@@ -54,21 +56,42 @@ const UserInfo = () => {
     //     }
     // }, [location.state, navigate]);
 
-             //           ::::::::::::::::::::       jwt-decode
+    //           ::::::::::::::::::::       jwt-decode
+    // useEffect(() => {
+    //     const credential = location.state ? location.state.credential : null;
+  
+    //     console.log('Credential:', credential); // Log the credential string
+    //     if (credential) {
+    //         try {
+    //             const decodedToken = jwtDecode(credential);
+    //             setUserInfo(decodedToken);
+    //             console.log('Logged in as:', decodedToken.name); // Log the username to console
+    //         } catch (error) {
+    //             console.error('Failed to decode credential:', error);
+    //         }
+    //     } else {
+    //         // Handle no user data
+    //         navigate('/'); // Redirect to login if no user data is found
+    //     }
+    // }, [location.state, navigate]);
+
     useEffect(() => {
-        const credential = location.state ? location.state.credential : null;
-        console.log('Credential:', credential); // Log the credential string
+        const { credential, profile } = location.state || {};
+
         if (credential) {
             try {
                 const decodedToken = jwtDecode(credential);
                 setUserInfo(decodedToken);
-                console.log('Logged in as:', decodedToken.name); // Log the username to console
+                console.log('Logged in with Google as:', decodedToken.name);
             } catch (error) {
                 console.error('Failed to decode credential:', error);
+                navigate('/');
             }
+        } else if (profile) {
+            setUserInfo(profile);
+            console.log('Logged in with Facebook as:', profile.name);
         } else {
-            // Handle no user data
-            navigate('/'); // Redirect to login if no user data is found
+            navigate('/');
         }
     }, [location.state, navigate]);
 
@@ -101,50 +124,70 @@ const UserInfo = () => {
     //         navigate('/'); // Redirect to login if no user data is found
     //     }
     // }, [location.state, navigate]);
-    
+
     const handleLogout = () => {
         // Perform logout actions here
         navigate('/'); // Redirect to the login page after logout
     };
 
-  return (
-      <div >
+    return (
+        // <div >
 
-          {userInfo && (
-              <div>
-                
+        //      {userInfo  && ( 
+             
+        //         <div>
+        //             <div >
+        //                 <p className='text'>You are logged in as</p>
+        //              {userInfo.picture && ( 
+                       
+        //                      <img src={userInfo.picture} alt="user_picture" /> // Assuming user photo URL is provided in the JWT token
+                            
+        //                 )}
+        //                  <p className='text_name'>{userInfo.name}</p> 
+                      
 
-          <div >
-              <p className='text'>You are logged in as</p>
-                      {userInfo.picture && (
-                          <img src={userInfo.picture} alt="user_picture" /> // Assuming user photo URL is provided in the JWT token
-                      )}
-              <p className='text_name'>{userInfo.name}</p>
-              {/* <p className='text_name'>{email}</p> */}
-          </div>
-          <div className='btn_goggle'>
-              <button className='btn_out' onClick={handleLogout}>Logout</button>
-            </div>
-            </div>
+        //                 {/* <p className='text_name'>{email}</p> */}
+        //             </div>
+        //             <div className='btn_goggle'>
+        //                 <button className='btn_out' onClick={handleLogout}>Logout</button>
+        //             </div>
+        //         </div>
+        //     )}
+        // </div>
+
+        <div>
+            {userInfo && (
+                <div>
+                    <div>
+                        <p className='text'>You are logged in as</p>
+                        {userInfo.picture && (
+                            <img className='user_picture' src={userInfo.picture} alt="user_picture" />
+                        )}
+                        <p className='text_name'>{userInfo.name}</p>
+                    </div>
+                    <div className='btn_goggle'>
+                        <button className='btn_out' onClick={handleLogout}>Logout</button>
+                    </div>
+                </div>
             )}
-      </div>
+        </div>
 
-    //   <IntlProvider locale="en" messages={{}}>
-    //       <div>
-    //           <div>
-    //               <p className='text'>
-    //                   <FormattedMessage id='logged_in_as' defaultMessage='You are logged in as' />
-    //               </p>
-    //               <p className='text_name'>{name}</p>
-    //           </div>
-    //           <div className='btn_goggle'>
-    //               <button className='btn_out' onClick={handleLogout}>
-    //                   <FormattedMessage id='logout' defaultMessage='Logout' />
-    //               </button>
-    //           </div>
-    //       </div>
-    //   </IntlProvider>
-  )
+        //   <IntlProvider locale="en" messages={{}}>
+        //       <div>
+        //           <div>
+        //               <p className='text'>
+        //                   <FormattedMessage id='logged_in_as' defaultMessage='You are logged in as' />
+        //               </p>
+        //               <p className='text_name'>{name}</p>
+        //           </div>
+        //           <div className='btn_goggle'>
+        //               <button className='btn_out' onClick={handleLogout}>
+        //                   <FormattedMessage id='logout' defaultMessage='Logout' />
+        //               </button>
+        //           </div>
+        //       </div>
+        //   </IntlProvider>
+    )
 }
 
 export default UserInfo

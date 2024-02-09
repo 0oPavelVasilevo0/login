@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import logo from './../pngegg.png'
-// import Btn from './Btn'
 import BtnForgot from './BtnForgot'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google'
@@ -20,7 +19,7 @@ const LoginWindow = () => {
   // const intl = useIntl(); // Initialize intl
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  // const [profile, setProfile] = useState(null);
+  // const [profile, setProfile] = useState(null);// Инициализируем состояние для профиля
 
   const isDisabled = login === '' || password === '';
 
@@ -36,6 +35,88 @@ const LoginWindow = () => {
     event.preventDefault();
     // Действия при отправке формы
   };
+
+  // const handleFacebookLoginSuccess = (response) => {
+  //   try {
+  //     const { profile } = response.data;
+  //     navigate('/userinfo', { state: { profile } }); // Pass the profile object as state
+  //   } catch (error) {
+  //     console.error('Failed to get Facebook profile data:', error);
+  //   }
+  // };
+
+  // const handleFacebookLoginSuccess = (response) => {
+  //   try {
+  //     console.log('Facebook login response:', response); // Log the response from Facebook
+  //     const { profile } = response.data;
+  //     console.log('Facebook profile:', profile); // Log the Facebook profile
+  //     navigate('/userinfo', { state: { profile } });
+  //   } catch (error) {
+  //     console.error('Failed to get Facebook profile data:', error);
+  //   }
+  // };
+
+  // const handleFacebookLoginSuccess = (response) => {
+  //   try {
+  //     console.log('Facebook login response:', response);
+  //     const { data } = response; // Destructure 'data' from the response
+  //     console.log('Facebook profile:', data); // Log 'data' instead of 'profile'
+  //     navigate('/userinfo', { state: { profile: data } }); // Pass 'data' as profile
+  //   } catch (error) {
+  //     console.error('Failed to get Facebook profile data:', error);
+  //   }
+  // };
+
+  const handleFacebookLoginSuccess = (response) => {
+    try {
+      console.log('Facebook login response:', response);
+      const { data } = response; // Destructure 'data' from the response
+      console.log('Facebook profile:', data); // Log 'data' instead of 'profile'
+
+      // Extract relevant profile information
+      const { name, picture } = data;
+
+      // Check if picture data is available
+      const pictureUrl = picture && picture.data && picture.data.url;
+
+      // Create the profile object
+      const profile = {
+        name,
+        picture: pictureUrl
+      };
+
+      navigate('/userinfo', { state: { profile } }); // Pass 'profile' to UserInfo
+    } catch (error) {
+      console.error('Failed to get Facebook profile data:', error);
+    }
+  };
+
+ 
+
+  //                                   ::::::::::::::::: с использованием graph.facebook 
+  // const handleFacebookLoginSuccess = async (response) => {
+  //   try {
+  //     console.log('Facebook login response:', response);
+  //     const { data } = response; // Destructure 'data' from the response
+  //     console.log('Facebook profile:', data); // Log 'data' instead of 'profile'
+
+  //     // Extract relevant profile information
+  //     const { name, userID } = data;
+
+  //     // Fetch profile picture in the desired size using Facebook Graph API
+  //     const pictureUrl = `https://graph.facebook.com/${userID}/picture?type=large`;
+
+  //     // Create the profile object
+  //     const profile = {
+  //       name,
+  //       picture: pictureUrl
+  //     };
+
+  //     navigate('/userinfo', { state: { profile } }); // Pass 'profile' to UserInfo
+  //   } catch (error) {
+  //     console.error('Failed to get Facebook profile data:', error);
+  //   }
+  // };
 
   //*********        NAME 
 
@@ -89,9 +170,11 @@ const LoginWindow = () => {
 
   const handleLoginSuccess = (credentialResponse) => {
     const { credential } = credentialResponse;
+    // console.log(response);
+    // setProfile(response.data);
     try {
       if (credential) {
-        navigate('/userinfo', { state: { credential } }); // Pass the entire credential object as state
+        navigate('/userinfo', { state: { credential }}); // Pass the entire credential object as state
       }
     } catch (error) {
       console.error('Failed to decode credential:', error);
@@ -184,48 +267,42 @@ const LoginWindow = () => {
        {/* {!profile? */}
          <LoginSocialFacebook
           appId='284162668018548'
-         
-          onResolve={(response) => {
-            console.log(response)
-            // setProfile(response.data)
-          }}
-          onReject={(error) => {
-            console.log(error)
-          }}
+          onResolve={handleFacebookLoginSuccess} // Callback on successful login
+          onReject={handleLoginError} // Callback on login error
+          // onResolve={(response) => {
+          //   console.log(response)
+          //   // setProfile(response.data)
+          // }}
+          // onReject={(error) => {
+          //   console.log(error)
+          // }}
         >
           <FacebookLoginButton
           size='32px'
           iconSize='16px'
             iconColor='dark'
             text='signin with Facebook'
-            align='center'
-           
-            // iconFormat={'medium'}
             className='btn_facebook'
+            align='center'
             activeStyle={{ background: '#0077ff08', border: '1px #0077ff08'}}
-            // background='dark'
-            // boxShadow='none'
           style={{
             width: '302px',
-              // fontFamily: 'Google Sans',
             fontSize: '14px',
-            // fontWidth: '200',
             background: 'white',
-            // theme: 'outline',
             color: '#3c4043',
             letterSpacing: '0.45px',
-            
           }}
             // onSuccess={handleLoginSuccess}
+            // onSuccess={handleFacebookLoginSuccess}
             // onError={handleLoginError}
            />
            
         </LoginSocialFacebook>
-        {/* : ''} */}
-        {/* {profile? <div>
-          <h1>{profile.name}</h1>
-          <img src={profile.picture.data.url} alt='profile_picture'/>
-      </div>: ''} */}
+           {/* : ''} 
+          {profile? <div>
+           <h1>{profile.name}</h1>
+           <img src={profile.picture.data.url} alt='profile_picture'/>
+       </div>: ''}  */}
     </div>
     </div>
   )

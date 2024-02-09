@@ -210,3 +210,8 @@ input:focus {
   color: #01afdb;
   ;
 }
+
+.user_picture {
+  height: 80;
+  width: 80;
+}
