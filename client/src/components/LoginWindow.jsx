@@ -14,6 +14,8 @@ import { FacebookLoginButton } from 'react-social-login-buttons'
 // import { useGoogleLogin } from '@react-oauth/google';
 // import Iframe from 'react-iframe';
 
+const facebookId = process.env.REACT_APP_FACEBOOK_CLIENT_ID;
+
 const LoginWindow = () => {
   const navigate = useNavigate();
   // const intl = useIntl(); // Initialize intl
@@ -266,7 +268,8 @@ const LoginWindow = () => {
         />
        {/* {!profile? */}
          <LoginSocialFacebook
-          appId='284162668018548'
+          // appId='284162668018548'
+          appId={facebookId}
           onResolve={handleFacebookLoginSuccess} // Callback on successful login
           onReject={handleLoginError} // Callback on login error
           // onResolve={(response) => {
